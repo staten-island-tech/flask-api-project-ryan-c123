@@ -13,5 +13,16 @@ from flask import Flask, render_template
 import requests
 
 app = Flask(__name__)
-
+response = requests.get("https://api.fbi.gov/wanted/v1/list")
+data = response.json()
+print(data)
 @app.route("/")
+
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+print(data['total'])
+print(data['items'][0]['title'])
+"""
