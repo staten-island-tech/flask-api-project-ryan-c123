@@ -12,17 +12,26 @@ the user sees on the page.
 from flask import Flask, render_template
 import requests
 
-app = Flask(__name__)
-response = requests.get("https://api.fbi.gov/wanted/v1/list")
-data = response.json()
-print(data)
-@app.route("/")
 
+mortys = []
+base_url = "https://rickandmortyapi.com/api/character/"
+page = 1
 
+while True:
+    response = requests.get(f"{base_url}?page={page}")
+    data = response.json()
+    
+    # Filter characters with "Rick" in the name
+    for character in data["results"]:
+        if "morty" in character["name"].lower():
+            mortys.append(character)
+    
+    # Go to the next page if available
+    if data["info"]["next"]:
+        page += 1
+    else:
+        break
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
-print(data['total'])
-print(data['items'][0]['title'])
-"""
+# Print names of all "Rick" characters
+for morty in mortys:
+    print(morty["name"])
