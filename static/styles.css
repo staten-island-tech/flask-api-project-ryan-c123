@@ -1,0 +1,95 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #acf864;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #e9ff98;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"], select {
+    font-family: 'Courier New', Courier, monospace;
+    color: rgb(0, 0, 0)
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: rgb(61, 204, 173);
+    border-radius: 4px;
+}
+
+input:hover {
+    transform: scale(1.05);
+    background-color: rgb(0, 255, 149);
+}
+button {
+    padding: 8px 16px;
+    background-color: rgb(61, 204, 173);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+button:hover {
+    transform: scale(1.1);
+    background-color: rgb(0, 255, 149);
+}
+
+select {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;                   /* Font size */
+    color: rgb(129, 11, 11)
+    background-color: rgb(61, 204, 173);
+    border: 1px solid #ccc;            /* Border */
+    border-radius: 5px;                /* Rounded corners */
+    padding: 8px 12px;                 /* Padding inside the box */
+    cursor: pointer;                   /* Pointer on hover */
+}
+
+select:hover {
+    transform: scale(1.05);
+    background-color: rgb(0, 255, 149);
+}
+.character-card {
+    margin: 10px;
+    padding: 10px;
+    background-color: rgb(61, 204, 173);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 160px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.character-card:hover {
+    transform: scale(1.05);
+    background-color: rgb(0, 255, 149);
+}
+
+.character-card img {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    margin: 0 10px;
+}
+

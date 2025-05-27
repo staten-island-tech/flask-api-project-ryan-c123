@@ -2,12 +2,41 @@
 <html>
 <head>
     <title>Rick and Morty Characters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <h1>Rick and Morty Characters</h1>
-    <div style="display: flex; flex-wrap: wrap;">
+
+    <form method="GET" action="/">
+        <input type="text" name="search" placeholder="Search character..." value="{{ request.args.get('search', '') }}">
+
+        <select name="status">
+            <option value="">Any Status</option>
+            <option value="alive" {% if request.args.get('status') == 'alive' %}selected{% endif %}>Alive</option>
+            <option value="dead" {% if request.args.get('status') == 'dead' %}selected{% endif %}>Dead</option>
+            <option value="unknown" {% if request.args.get('status') == 'unknown' %}selected{% endif %}>Unknown</option>
+        </select>
+    
+        <select name="species">
+            <option value="">Any Species</option>
+            <option value="human" {% if request.args.get('species') == 'human' %}selected{% endif %}>Human</option>
+            <option value="alien" {% if request.args.get('species') == 'alien' %}selected{% endif %}>Alien</option>
+        </select>
+    
+        <select name="gender">
+            <option value="">Any Gender</option>
+            <option value="male" {% if request.args.get('gender') == 'male' %}selected{% endif %}>Male</option>
+            <option value="female" {% if request.args.get('gender') == 'female' %}selected{% endif %}>Female</option>
+        </select>
+    
+        <button type="submit">Search</button>
+    </form>
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
         {% for character in characters %}
-            <div style="margin: 10px; text-align: center;">
+            <div class="character-card">
                 <a href="/character/{{ character.id }}">
                     <img src="{{ character.image }}" width="150"><br>
                     <strong>{{ character.name }}</strong><br>
@@ -20,10 +49,14 @@
         <p>Page {{ current_page }} of {{ total_pages }}</p>
     
         {% if prev_page %}
-            <a href="/?page={{ prev_page }}"><button>Previous</button></a>
+            <a href="/?page={{ prev_page }}{% if request.args.get('search') %}&search={{ request.args.get('search') }}{% endif %}{% if request.args.get('status') %}&status={{ request.args.get('status') }}{% endif %}{% if request.args.get('species') %}&species={{ request.args.get('species') }}{% endif %}{% if request.args.get('gender') %}&gender={{ request.args.get('gender') }}{% endif %}">
+                <button>Previous</button>
+             </a>
         {% endif %}
         {% if next_page %}
-            <a href="/?page={{ next_page }}"><button>Next</button></a>
+            <a href="/?page={{ next_page }}{% if request.args.get('search') %}&search={{ request.args.get('search') }}{% endif %}{% if request.args.get('status') %}&status={{ request.args.get('status') }}{% endif %}{% if request.args.get('species') %}&species={{ request.args.get('species') }}{% endif %}{% if request.args.get('gender') %}&gender={{ request.args.get('gender') }}{% endif %}">
+               <button>Next</button>
+            </a>
         {% endif %}
     </div>
 </body>

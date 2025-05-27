@@ -16,54 +16,77 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    # Step 1: Read page number from query string (default = 1)
     page = request.args.get("page", default=1, type=int)
+    search = request.args.get("search", default="", type=str)
+    status = request.args.get("status", default="", type=str)
+    species = request.args.get("species", default="", type=str)
+    gender = request.args.get("gender", default="", type=str)
 
-    # Step 2: Get data from API
-    response = requests.get("https://rickandmortyapi.com/api/character", params={"page": page})
+    params = {"page": page}
+    if search:
+        params["name"] = search
+    if status:
+        params["status"] = status
+    if species:
+        params["species"] = species
+    if gender:
+        params["gender"] = gender
+
+    response = requests.get("https://rickandmortyapi.com/api/character", params=params)
+
+    if response.status_code == 404:
+        return render_template("index.html",
+                               characters=[],
+                               current_page=page,
+                               total_pages=0,
+                               next_page=None,
+                               prev_page=None,
+                               error="No characters found.",
+                               request=request)
+
     data = response.json()
     characters = data["results"]
     total_pages = data["info"]["pages"]
 
-    # Step 3: Prepare character data
-    char_list = []
-    for char in characters:
-        char_list.append({
-            "id": char["id"],
-            "name": char["name"],
-            "image": char["image"],
-            "species": char["species"],
-            "status": char["status"]
-        })
+    char_list = [{
+        "id": char["id"],
+        "name": char["name"],
+        "image": char["image"],
+        "species": char["species"],
+        "status": char["status"]
+    } for char in characters]
 
-    # Step 4: Handle next and previous page numbers
     next_page = page + 1 if data["info"]["next"] else None
     prev_page = page - 1 if data["info"]["prev"] else None
 
-    # Step 5: Pass everything to template
-    return render_template("index.html", characters=char_list,
+    return render_template("index.html",
+                           characters=char_list,
+                           current_page=page,
+                           total_pages=total_pages,
                            next_page=next_page,
                            prev_page=prev_page,
-                           current_page=page,
-                           total_pages=total_pages)
-@app.route("/character/<int:id>")
-def character_detail(id):
-    response = requests.get(f"https://rickandmortyapi.com/api/character/{id}")
+                           error=None,
+                           request=request)
+@app.route("/character/<int:character_id>")
+def character_detail(character_id):
+    response = requests.get(f"https://rickandmortyapi.com/api/character/{character_id}")
+
+    if response.status_code != 200:
+        return render_template("character.html", character=None, error="Character not found.")
+
     data = response.json()
 
     character = {
         "id": data["id"],
         "name": data["name"],
-        "status": data["status"],
+        "image": data["image"],
         "species": data["species"],
-        "type": data["type"] if data["type"] else "Unknown",
+        "status": data["status"],
         "gender": data["gender"],
         "origin": data["origin"]["name"],
-        "location": data["location"]["name"],
-        "image": data["image"]
+        "location": data["location"]["name"]
     }
 
-    return render_template("character.html", character=character)
-
-if __name__ == '__main__':
+    return render_template("character.html", character=character, error=None)
+if __name__ == "__main__":
     app.run(debug=True)
