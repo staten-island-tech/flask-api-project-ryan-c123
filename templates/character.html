@@ -2,11 +2,12 @@
 <html>
 <head>
     <title>{{ character.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <h1>{{ character.name }}</h1>
     <img src="{{ character.image }}" alt="{{ character.name }}">
-    <ul>
+    <ul> 
         <li><strong>Status:</strong> {{ character.status }}</li>
         <li><strong>Species:</strong> {{ character.species }}</li>
         <li><strong>Type:</strong> {{ character.type }}</li>
@@ -14,6 +15,7 @@
         <li><strong>Origin:</strong> {{ character.origin }}</li>
         <li><strong>Location:</strong> {{ character.location }}</li>
     </ul>
-    <a href="/">Back to list</a>
+    <a href="/">
+        <button>Back to List of Characters</button>
 </body>
 </html>

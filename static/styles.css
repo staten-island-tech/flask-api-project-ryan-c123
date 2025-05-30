@@ -33,6 +33,7 @@ input:hover {
     background-color: rgb(0, 255, 149);
 }
 button {
+    font-family: 'Courier New', Courier, monospace;
     padding: 8px 16px;
     background-color: rgb(61, 204, 173);
     color: white;
