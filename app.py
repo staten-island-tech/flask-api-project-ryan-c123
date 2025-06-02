@@ -22,6 +22,7 @@ def index():
     species = request.args.get("species", default="", type=str)
     gender = request.args.get("gender", default="", type=str)
 
+
     params = {"page": page}
     if search:
         params["name"] = search
