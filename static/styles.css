@@ -20,7 +20,7 @@ form {
 
 input[type="text"], select {
     font-family: 'Courier New', Courier, monospace;
-    color: rgb(0, 0, 0)
+    color: rgb(0, 0, 0);
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
@@ -51,7 +51,7 @@ button:hover {
 select {
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;                   /* Font size */
-    color: rgb(129, 11, 11)
+    color: rgb(129, 11, 11);
     background-color: rgb(61, 204, 173);
     border: 1px solid #ccc;            /* Border */
     border-radius: 5px;                /* Rounded corners */
