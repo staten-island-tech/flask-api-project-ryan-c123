@@ -90,3 +90,23 @@ def character_detail(character_id):
     return render_template("character.html", character=character, error=None)
 if __name__ == "__main__":
     app.run(debug=True)
+
+""" 
+import requests
+
+params = {
+    "name": "rick",
+    "species": "human",
+    "status": "alive",
+    "gender": "male"
+}
+
+response = requests.get("https://rickandmortyapi.com/api/character/", params=params)
+
+if response.status_code == 200:
+    data = response.json()
+    for character in data["results"]:
+        print(character["name"])
+else:
+    print("Error:", response.status_code)
+ """
